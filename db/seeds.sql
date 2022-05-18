@@ -11,7 +11,7 @@ VALUES
   ('Lead Engineer', 300000, 1),
   ('Software Engineer', 400000, 1),
   ('Account Manager', 500000, 2),
-  ('Accountant', 600000 , 2)
+  ('Accountant', 600000 , 2),
   ('Legal Team Lead', 700000, 3),
   ('Lawyer', 8000000, 3);
 
