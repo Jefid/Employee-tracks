@@ -1,67 +1,70 @@
-const { connect } = require('http2');
-const inquirer = require('inquirer');
-const { Connection } = require('mysql2');
-const mysql = require('mysql2');
-require('dotenv').config();
+const { connect } = require("http2");
+const inquirer = require("inquirer");
+const { Connection } = require("mysql2");
+const mysql = require("mysql2");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3305;
 
 // Connect to database
 const db = mysql.createConnection(
   {
-    host: 'localhost',
+    host: "localhost",
     user: process.env.DB_USER,
     password: process.env.DB_PW,
-    database: 'employee_database',
+    database: "employee_database",
   },
   console.log(`Connected on ${PORT}`)
 );
 
 // Start server after DB connection
-db.connect(err => {
-    if (err) throw err;
+db.connect((err) => {
+  if (err) throw err;
 
-    console.log('Database connected.');
-  
+  console.log("Database connected.");
+
   //AREA TO ADD INQUIRER PROMPTS AND CONSOLE LOG INQUIRERE SPLASH SCREEN
-
+  console.log("WELCOME");
+  console.log("TO");
+  console.log("EMPLOYEE");
+  console.log("TRACKER");
   promptUser();
 });
 function promptUser() {
   inquirer
     .prompt([
       {
-        type: 'list',
-        name: 'directory',
-        message: 'What would you like to do?',
+        type: "list",
+        name: "directory",
+        message: "What would you like to do?",
         choices: [
-          'View all departments',
-          'View all roles',
-          'View all employees',
-          'Add department',
-          'Add role',
-          'Add employee',
-          'Update employee role',
-          'Exit',
+          "View all departments",
+          "View all roles",
+          "View all employees",
+          "Add department",
+          "Add role",
+          "Add employee",
+          "Update employee role",
+          "Exit",
         ],
       },
     ])
     .then((response) => {
-      if (response.directory === 'View all departments') {
+      if (response.directory === "View all departments") {
         viewDeps();
-      } else if (response.directory === 'View all roles') {
+      } else if (response.directory === "View all roles") {
         viewRoles();
-      } else if (response.directory === 'View all employees') {
+      } else if (response.directory === "View all employees") {
         viewEmps();
-      } else if (response.directory === 'Add department') {
+      } else if (response.directory === "Add department") {
         addDep();
-      } else if (response.directory === 'Add role') {
+      } else if (response.directory === "Add role") {
         addRole();
-      } else if (response.directory === 'Add employee') {
+      } else if (response.directory === "Add employee") {
         addEmp();
-      } else if (response.directory === 'Update employee role') {
+      } else if (response.directory === "Update employee role") {
         updateRole();
-      } else if (response.directory === 'Exit') {
+      } else if (response.directory === "Exit") {
         exit();
       }
     });
@@ -104,9 +107,9 @@ async function addDep() {
   await inquirer
     .prompt([
       {
-        type: 'input',
-        name: 'depName',
-        message: 'What is the name of the new department?',
+        type: "input",
+        name: "depName",
+        message: "What is the name of the new department?",
       },
     ])
     .then((answer) => {
@@ -124,23 +127,23 @@ async function addRole() {
   await inquirer
     .prompt([
       {
-        type: 'input',
-        name: 'roleName',
-        message: 'Enter the name of the new role:',
+        type: "input",
+        name: "roleName",
+        message: "Enter the name of the new role:",
       },
       {
-        type: 'input',
-        name: 'roleSalary',
-        message: 'Enter the salary associated with this role: (no commas)',
+        type: "input",
+        name: "roleSalary",
+        message: "Enter the salary associated with this role: (no commas)",
       },
       {
-        type: 'input',
-        name: 'roleDep',
-        message: 'Please enter the department ID for this role: ',
+        type: "input",
+        name: "roleDep",
+        message: "Please enter the department ID for this role: ",
       },
     ])
     .then((answer) => {
-      if (answer === 'Other') {
+      if (answer === "Other") {
         addDep();
       }
       const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
@@ -159,28 +162,28 @@ async function addEmp() {
   await inquirer
     .prompt([
       {
-        type: 'input',
-        name: 'firstName',
-        message: 'Enter the employee first name:',
+        type: "input",
+        name: "firstName",
+        message: "Enter the employee first name:",
       },
       {
-        type: 'input',
-        name: 'lastName',
-        message: 'Enter the employee last name:',
+        type: "input",
+        name: "lastName",
+        message: "Enter the employee last name:",
       },
       {
-        type: 'input',
-        name: 'empRole',
-        message: 'What is the role ID associated with this employee?',
+        type: "input",
+        name: "empRole",
+        message: "What is the role ID associated with this employee?",
       },
       {
-        type: 'input',
-        name: 'empMgr',
-        message: 'Please enter the manager ID associated for this employee: ',
+        type: "input",
+        name: "empMgr",
+        message: "Please enter the manager ID associated for this employee: ",
       },
     ])
     .then((answer) => {
-      if (answer.empRole === 'Other') {
+      if (answer.empRole === "Other") {
         addRole();
       }
       const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
@@ -204,15 +207,15 @@ async function updateRole() {
   await inquirer
     .prompt([
       {
-        type: 'input',
-        name: 'empID',
+        type: "input",
+        name: "empID",
         message:
-          'Enter the ID number of the employee you would like to update:',
+          "Enter the ID number of the employee you would like to update:",
       },
       {
-        type: 'input',
-        name: 'roleID',
-        message: 'Enter the ID of the new role for this employee: ',
+        type: "input",
+        name: "roleID",
+        message: "Enter the ID of the new role for this employee: ",
       },
     ])
     .then((answer) => {
@@ -227,9 +230,10 @@ async function updateRole() {
     });
 }
 
-function exit(){
-  console.log('Bye!');
-};
+function exit() {
+  console.log("GOODBYE!");
+  return;
+}
 
 //Bonus
 
