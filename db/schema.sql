@@ -3,8 +3,9 @@ DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS department;
 
 CREATE TABLE department (
-  id INTEGER PRIMARY KEY,
-  department_name VARCHAR(50) NOT NULL
+id INTEGER AUTO_INCREMENT NOT NULL,
+    department_name VARCHAR(30),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE roles (
