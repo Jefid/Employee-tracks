@@ -26,7 +26,7 @@ _This project requires Node.js_ and MYSQL
 
 After you have installed Node, use the CLI to clone this repository.
 ```bash
-git clone git@github.com:jefid/employee-tracks
+git clone git@github.com:jefid/employee-tracks-jefid
 ```
 
 Make sure to include the following in your ``.gitignore`` before installing the dependencies!
